@@ -1,0 +1,70 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "calendar.month.1" : {
+
+    },
+    "calendar.month.2" : {
+
+    },
+    "calendar.month.3" : {
+
+    },
+    "calendar.month.4" : {
+
+    },
+    "calendar.month.5" : {
+
+    },
+    "calendar.month.6" : {
+
+    },
+    "calendar.month.7" : {
+
+    },
+    "calendar.month.8" : {
+
+    },
+    "calendar.month.9" : {
+
+    },
+    "calendar.month.10" : {
+
+    },
+    "calendar.month.11" : {
+
+    },
+    "calendar.month.12" : {
+
+    },
+    "calendar.short%i%i%i" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%2$i/%3$i/%1$i"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$i/%2$i/%3$i"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$i/%2$i/%3$i"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$i/%2$i/%3$i"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
