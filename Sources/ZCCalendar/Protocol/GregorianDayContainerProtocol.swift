@@ -1,9 +1,8 @@
 //
 //  GregorianDayContainerProtocol.swift
-//  OneOne
+//  ZCCalendar
 //
 //  Created by Ci Zi on 2019/9/21.
-//  Copyright © 2019 zizicici. All rights reserved.
 //
 
 import Foundation

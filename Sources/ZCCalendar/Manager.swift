@@ -1,6 +1,6 @@
 //
 //  Manager.swift
-//  OneOne
+//  ZCCalendar
 //
 //  Created by Ci Zi on 2023/5/28.
 //
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import OSLog
 
-extension Notification.Name {
+public extension Notification.Name {
     static let TodayUpdated = Notification.Name(rawValue: "com.zizicici.common.time.updated")
 }
 
@@ -56,7 +56,7 @@ public class Manager {
         }
     }
     
-    func dayCount(at month: Month, year: Int) -> Int {
+    public func dayCount(at month: Month, year: Int) -> Int {
         if year == 1582 && month == .oct {
             // 1582 fix
             return 21
@@ -108,29 +108,29 @@ public class Manager {
         }
     }
     
-    func firstDay(at month: Month, year: Int) -> GregorianDay {
+    public func firstDay(at month: Month, year: Int) -> GregorianDay {
         let day = GregorianDay(year: year, month: month, day: 1)
         return day
     }
     
-    func lastDay(at month: Month, year: Int) -> GregorianDay {
+    public func lastDay(at month: Month, year: Int) -> GregorianDay {
         let dayCount = dayCount(at: month, year: year)
         let day = GregorianDay(year: year, month: month, day: dayCount)
         return day
     }
     
-    func isToday(gregorianDay: GregorianDay?) -> Bool {
+    public func isToday(gregorianDay: GregorianDay?) -> Bool {
         if gregorianDay == nil {
             return false
         }
         return today == gregorianDay
     }
     
-    func isCurrent(month: Month, year: Int) -> Bool {
+    public func isCurrent(month: Month, year: Int) -> Bool {
         return (today.month == month) && (today.year == year)
     }
     
-    func isCurrent(year: Int) -> Bool {
+    public func isCurrent(year: Int) -> Bool {
         return today.year == year
     }
     

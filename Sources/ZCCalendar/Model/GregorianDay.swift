@@ -1,19 +1,18 @@
 //
 //  GregorianDay.swift
-//  OneOne
+//  ZCCalendar
 //
 //  Created by Ci Zi on 2019/9/21.
-//  Copyright © 2019 zizicici. All rights reserved.
 //
 
 import Foundation
 
 public struct GregorianDay: Equatable, Codable, Hashable {
-    let year: Int
-    let month: Month
-    let day: Int
+    public let year: Int
+    public let month: Month
+    public let day: Int
 
-    var julianDay: Int
+    public var julianDay: Int
 
     enum CodingKeys: String, CodingKey {
         case year
@@ -41,23 +40,23 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         try container.encode(String(format: "%d-%02d-%02d", year, month.rawValue, day))
     }
 
-    init(year: Int, month: Month, day: Int) {
+    public init(year: Int, month: Month, day: Int) {
         self.year = year
         self.month = month
         self.day = day
         julianDay = GregorianDay.standardJDN(year: year, month: month, day: day)
     }
     
-    init(from date: Date) {
+    public init(from date: Date) {
         let calendar = Calendar.current
         self.init(year: calendar.component(.year, from: date), month: Month(rawValue: calendar.component(.month, from: date)) ?? .apr, day: calendar.component(.day, from: date))
     }
     
-    init(nanoSeconds: Int64) {
+    public init(nanoSeconds: Int64) {
         self.init(from: Date(timeIntervalSince1970: Double(nanoSeconds) / 1000.0))
     }
 
-    init(JDN: Int) {
+    public init(JDN: Int) {
         var target = JDN
         if JDN <= 2299160 {
             // 1582/10/4
@@ -89,7 +88,7 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         julianDay = JDN
     }
 
-    func dayString() -> String {
+    public func dayString() -> String {
         if year == 1582, month == .sep, day >= 5 {
             return "\(day + 10)"
         } else {
@@ -97,11 +96,11 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         }
     }
 
-    func weekdayOrder() -> WeekdayOrder {
+    public func weekdayOrder() -> WeekdayOrder {
         return WeekdayOrder(rawValue: julianDay % 7 + 1) ?? .sun
     }
     
-    func generateDate(secondsFromGMT: Int, hour: Int = 0, minute: Int = 0, second: Int = 0) -> Date? {
+    public func generateDate(secondsFromGMT: Int, hour: Int = 0, minute: Int = 0, second: Int = 0) -> Date? {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month.rawValue
@@ -267,140 +266,3 @@ extension GregorianDay {
         return String(format: (String(localized: "calendar.short%i%i%i", bundle: .module)), year, month.rawValue, day)
     }
 }
-
-enum Month: Int, Codable, CaseIterable {
-    case jan = 1
-    case feb = 2
-    case mar = 3
-    case apr = 4
-    case may = 5
-    case jun = 6
-    case jul = 7
-    case aug = 8
-    case sep = 9
-    case oct = 10
-    case nov = 11
-    case dec = 12
-
-    func dayCount(inLeapYear: Bool = false) -> Int {
-        // Normal case, don't handle the 1582 Oct case
-        switch self {
-        case .jan, .mar, .may, .jul, .aug, .oct, .dec:
-            return 31
-        case .feb:
-            return inLeapYear ? 29 : 28
-        case .apr, .jun, .sep, .nov:
-            return 30
-        }
-    }
-
-    static func < (left: Month, right: Month) -> Bool {
-        return left.rawValue < right.rawValue
-    }
-
-    static func > (left: Month, right: Month) -> Bool {
-        return left.rawValue > right.rawValue
-    }
-
-    static func <= (left: Month, right: Month) -> Bool {
-        return left.rawValue <= right.rawValue
-    }
-
-    static func >= (left: Month, right: Month) -> Bool {
-        return left.rawValue >= right.rawValue
-    }
-    
-    var name: String {
-        switch self {
-        case .jan:
-            return String(localized: "calendar.month.1", bundle: .module)
-        case .feb:
-            return String(localized: "calendar.month.2", bundle: .module)
-        case .mar:
-            return String(localized: "calendar.month.3", bundle: .module)
-        case .apr:
-            return String(localized: "calendar.month.4", bundle: .module)
-        case .may:
-            return String(localized: "calendar.month.5", bundle: .module)
-        case .jun:
-            return String(localized: "calendar.month.6", bundle: .module)
-        case .jul:
-            return String(localized: "calendar.month.7", bundle: .module)
-        case .aug:
-            return String(localized: "calendar.month.8", bundle: .module)
-        case .sep:
-            return String(localized: "calendar.month.9", bundle: .module)
-        case .oct:
-            return String(localized: "calendar.month.10", bundle: .module)
-        case .nov:
-            return String(localized: "calendar.month.11", bundle: .module)
-        case .dec:
-            return String(localized: "calendar.month.12", bundle: .module)
-        }
-    }
-    
-    func getShortSymbol() -> String {
-        guard let shortMonthSymbols = symbolFormatter.shortMonthSymbols else {
-            return ""
-        }
-        if rawValue <= shortMonthSymbols.count {
-            return shortMonthSymbols[rawValue - 1]
-        } else {
-            return ""
-        }
-    }
-}
-
-enum WeekdayOrder: Int, CaseIterable {
-    case mon = 1
-    case tue = 2
-    case wed = 3
-    case thu = 4
-    case fri = 5
-    case sat = 6
-    case sun = 7
-
-    var name: String {
-        switch self {
-        case .mon:
-            return "周一"
-        case .tue:
-            return "周二"
-        case .wed:
-            return "周三"
-        case .thu:
-            return "周四"
-        case .fri:
-            return "周五"
-        case .sat:
-            return "周六"
-        case .sun:
-            return "周日"
-        }
-    }
-    
-    var isWeekEnd: Bool {
-        if self == .sun || self == .sat {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    static var firstDayOfWeek: Self {
-        return Self.init(rawValue: Calendar.current.firstWeekday - 1) ?? .sun
-    }
-    
-    func getShortSymbol() -> String {
-        guard let shortWeekdaySymbols = symbolFormatter.shortWeekdaySymbols else {
-            return ""
-        }
-        if rawValue % 7 < shortWeekdaySymbols.count {
-            return shortWeekdaySymbols[rawValue % 7]
-        } else {
-            return ""
-        }
-    }
-}
-
-private let symbolFormatter = DateFormatter()
