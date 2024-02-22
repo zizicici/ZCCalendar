@@ -9,6 +9,12 @@
             "value" : "Jan"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35,6 +41,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Feb"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2月"
           }
         },
         "zh-Hans" : {
@@ -65,6 +77,12 @@
             "value" : "Mar"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -91,6 +109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apr"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "4月"
           }
         },
         "zh-Hans" : {
@@ -121,6 +145,12 @@
             "value" : "May"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -147,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jun"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "6月"
           }
         },
         "zh-Hans" : {
@@ -177,6 +213,12 @@
             "value" : "Jul"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -203,6 +245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aug"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "8月"
           }
         },
         "zh-Hans" : {
@@ -233,6 +281,12 @@
             "value" : "Sep"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "9月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -259,6 +313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oct"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10月"
           }
         },
         "zh-Hans" : {
@@ -289,6 +349,12 @@
             "value" : "Nov"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "11月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +383,12 @@
             "value" : "Dec"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12月"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -343,6 +415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%2$i/%3$i/%1$i"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$i/%2$i/%3$i"
           }
         },
         "zh-Hans" : {
