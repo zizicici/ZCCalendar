@@ -57,34 +57,28 @@ public struct GregorianDay: Equatable, Codable, Hashable {
     }
 
     public init(JDN: Int) {
-        var target = JDN
-        if JDN <= 2299160 {
-            // 1582/10/4
+        let jd = Double(JDN)
+        let z = Int(jd + 0.5)
+        let f = jd + 0.5 - Double(z)
+        var a = z
+        if z < 2299161 {
+            a = z
         } else {
-            // 1582/10/15
-            let alpha = Int((Float(JDN) - 2305447.5) / 36524.25)
-            target = JDN + 10 + alpha - Int(alpha/4)
+            let alpha = Int((Double(z) - 1867216.25) / 36524.25)
+            a = z + 1 + alpha - alpha / 4
         }
-        let B: Float = Float(target + 1524)
-        let C = Int((B - 122.1)/365.25)
-        let D = Int(365.25 * Float(C))
-        let E = Int((B - Float(D)) / 30.60001)
-        let dayValue: Int = Int(B - Float(D) - Float(Int(30.60001 * Float(E))))
-        var month = E
-        if E < 14 {
-            month = E - 1
-        } else if E < 16 {
-            month = E - 13
-        }
-        var year = 0
-        if month > 2 {
-            year = C - 4716
-        } else {
-            year = C - 4715
-        }
+        let b = a + 1524
+        let c = Int((Double(b) - 122.1) / 365.25)
+        let d = Int(365.25 * Double(c))
+        let e = Int(Double(b - d) / 30.6001)
+        
+        let day = b - d - Int(30.6001 * Double(e)) + Int(f)
+        let month = e < 14 ? e - 1 : e - 13
+        let year = month > 2 ? c - 4716 : c - 4715
+        
         self.year = year
         self.month = Month(rawValue: month) ?? .jan
-        self.day = dayValue
+        self.day = day
         julianDay = JDN
     }
 
