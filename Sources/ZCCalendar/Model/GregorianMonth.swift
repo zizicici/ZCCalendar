@@ -2,7 +2,7 @@
 //  GregorianMonth.swift
 //  ZCCalendar
 //
-//  Created by Ci Zi on 2024/2/22.
+//  Created by zici on 2024/2/22.
 //
 
 import Foundation
@@ -53,10 +53,10 @@ public struct GregorianMonth: Hashable {
     }
     
     public var title: String {
-        return String(format: (String(localized: "calendar.%i%@")), year, month.name)
+        return String(format: (String(localized: "calendar.%i%@", bundle: .module)), year, month.name)
     }
     
     public var shortTitle: String {
-        return String(format: (String(localized: "calendar.short%i%i")), year, month.rawValue)
+        return String(format: (String(localized: "calendar.short%i%i", bundle: .module)), year, month.rawValue)
     }
 }

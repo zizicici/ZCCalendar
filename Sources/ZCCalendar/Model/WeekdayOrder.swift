@@ -2,12 +2,12 @@
 //  WeekdayOrder.swift
 //  
 //
-//  Created by Ci Zi on 2024/2/22.
+//  Created by zici on 2024/2/22.
 //
 
 import Foundation
 
-public enum WeekdayOrder: Int, CaseIterable {
+public enum WeekdayOrder: Int, CaseIterable, Codable {
     case mon = 1
     case tue = 2
     case wed = 3
@@ -35,15 +35,18 @@ public enum WeekdayOrder: Int, CaseIterable {
         }
     }
     
-    public var isWeekEnd: Bool {
-        if self == .sun || self == .sat {
-            return true
-        } else {
+    public func isWeekEnd(twoDaysOff: Bool = true) -> Bool {
+        switch self {
+        case .mon, .tue, .wed, .thu, .fri:
             return false
+        case .sat:
+            return twoDaysOff
+        case .sun:
+            return true
         }
     }
     
-    static var firstDayOfWeek: Self {
+    public static var firstDayOfWeek: Self {
         return Self.init(rawValue: Calendar.current.firstWeekday - 1) ?? .sun
     }
     
@@ -53,6 +56,17 @@ public enum WeekdayOrder: Int, CaseIterable {
         }
         if rawValue % 7 < shortWeekdaySymbols.count {
             return shortWeekdaySymbols[rawValue % 7]
+        } else {
+            return ""
+        }
+    }
+    
+    public func getVeryShortSymbol() -> String {
+        guard let veryShortWeekdaySymbols = weekSymbolFormatter.veryShortWeekdaySymbols else {
+            return ""
+        }
+        if rawValue % 7 < veryShortWeekdaySymbols.count {
+            return veryShortWeekdaySymbols[rawValue % 7]
         } else {
             return ""
         }
