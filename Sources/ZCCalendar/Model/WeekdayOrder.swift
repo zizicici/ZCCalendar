@@ -15,36 +15,6 @@ public enum WeekdayOrder: Int, CaseIterable, Codable {
     case fri = 5
     case sat = 6
     case sun = 7
-
-    var name: String {
-        switch self {
-        case .mon:
-            return "周一"
-        case .tue:
-            return "周二"
-        case .wed:
-            return "周三"
-        case .thu:
-            return "周四"
-        case .fri:
-            return "周五"
-        case .sat:
-            return "周六"
-        case .sun:
-            return "周日"
-        }
-    }
-    
-    public func isWeekEnd(twoDaysOff: Bool = true) -> Bool {
-        switch self {
-        case .mon, .tue, .wed, .thu, .fri:
-            return false
-        case .sat:
-            return twoDaysOff
-        case .sun:
-            return true
-        }
-    }
     
     public static var firstDayOfWeek: Self {
         return Self.init(rawValue: Calendar.current.firstWeekday - 1) ?? .sun
