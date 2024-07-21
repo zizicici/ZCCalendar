@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol GregorianDayContainerProtocol {
+public protocol GregorianDayContainerProtocol {
     func firstDay() -> Int
     func lastDay() -> Int
 }
 
-extension GregorianDayContainerProtocol {
+public extension GregorianDayContainerProtocol {
     func interSection(with other: GregorianDayContainerProtocol) -> Bool {
         return !(other.lastDay() < firstDay() || other.firstDay() > lastDay())
     }
@@ -26,7 +26,7 @@ extension GregorianDayContainerProtocol {
     }
 }
 
-struct GregorianDayContainer: GregorianDayContainerProtocol {
+public struct GregorianDayContainer: GregorianDayContainerProtocol {
     let start: GregorianDay
     let end: GregorianDay
 
@@ -46,16 +46,16 @@ struct GregorianDayContainer: GregorianDayContainerProtocol {
         end = GregorianDay(year: year, month: month, day: dayCount)
     }
 
-    func firstDay() -> Int {
+    public func firstDay() -> Int {
         return start.julianDay
     }
 
-    func lastDay() -> Int {
+    public func lastDay() -> Int {
         return end.julianDay
     }
 }
 
-extension Array where Element: GregorianDayContainerProtocol {
+public extension Array where Element: GregorianDayContainerProtocol {
     func findElement(containing day: GregorianDay) -> Element? {
         var lowerBound: Int = 0
         var upperBound: Int = count

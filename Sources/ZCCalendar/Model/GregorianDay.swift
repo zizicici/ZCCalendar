@@ -107,7 +107,7 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         return Calendar.current.date(from: dateComponents)
     }
 
-    static func <= (left: GregorianDay, right: GregorianDay) -> Bool {
+    public static func <= (left: GregorianDay, right: GregorianDay) -> Bool {
         if left.year < right.year {
             return true
         } else if left.year == right.year {
@@ -122,7 +122,7 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         return false
     }
 
-    static func < (left: GregorianDay, right: GregorianDay) -> Bool {
+    public static func < (left: GregorianDay, right: GregorianDay) -> Bool {
         if left.year < right.year {
             return true
         } else if left.year == right.year {
@@ -137,7 +137,7 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         return false
     }
 
-    static func >= (left: GregorianDay, right: GregorianDay) -> Bool {
+    public static func >= (left: GregorianDay, right: GregorianDay) -> Bool {
         if left.year > right.year {
             return true
         } else if left.year == right.year {
@@ -152,7 +152,7 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         return false
     }
 
-    static func > (left: GregorianDay, right: GregorianDay) -> Bool {
+    public static func > (left: GregorianDay, right: GregorianDay) -> Bool {
         if left.year > right.year {
             return true
         } else if left.year == right.year {
@@ -167,15 +167,15 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         return false
     }
 
-    static func - (left: GregorianDay, right: GregorianDay) -> Int {
+    public static func - (left: GregorianDay, right: GregorianDay) -> Int {
         return left.julianDay - right.julianDay
     }
 
-    static func + (left: GregorianDay, right: Int) -> GregorianDay {
+    public static func + (left: GregorianDay, right: Int) -> GregorianDay {
         return GregorianDay(JDN: left.julianDay + right)
     }
 
-    static func standardJDN(year: Int, month: Month, day: Int) -> Int {
+    public static func standardJDN(year: Int, month: Month, day: Int) -> Int {
         let a: Int = (month <= .feb) ? 1 : 0
         let y: Int = year + 4800 - a
         let m: Int = month.rawValue + 12 * a - 3
@@ -192,11 +192,11 @@ public struct GregorianDay: Equatable, Codable, Hashable {
 }
 
 extension GregorianDay: GregorianDayContainerProtocol {
-    func firstDay() -> Int {
+    public func firstDay() -> Int {
         return julianDay
     }
 
-    func lastDay() -> Int {
+    public func lastDay() -> Int {
         return julianDay
     }
 }

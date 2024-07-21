@@ -37,7 +37,7 @@ public class Manager {
         self.today = GregorianDay(year: component.year ?? 1, month: Month(rawValue: component.month ?? 1) ?? .jan, day: component.day ?? 1)
     }
     
-    func getDays(in month: Month, year: Int) -> [GregorianDay] {
+    public func getDays(in month: Month, year: Int) -> [GregorianDay] {
         let dayCount = dayCount(at: month, year: year)
         let result = Array(0..<dayCount).map { dayIndex in
             return GregorianDay(year: year, month: month, day: dayIndex + 1)
@@ -134,7 +134,7 @@ public class Manager {
         return today.year == year
     }
     
-    func nextMonth(month: Month, year: Int) -> (month: Month, year: Int)? {
+    public func nextMonth(month: Month, year: Int) -> (month: Month, year: Int)? {
         guard let nextMonth = Month(rawValue: (month.rawValue) % 12 + 1) else {
             return nil
         }
@@ -147,7 +147,7 @@ public class Manager {
         }
     }
     
-    func previousMonth(month: Month, year: Int) -> (month: Month, year: Int)? {
+    public func previousMonth(month: Month, year: Int) -> (month: Month, year: Int)? {
         guard let previousMonth = Month(rawValue: (month.rawValue + 10) % 12 + 1) else {
             return nil
         }
