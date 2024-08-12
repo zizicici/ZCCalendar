@@ -47,8 +47,9 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         julianDay = GregorianDay.standardJDN(year: year, month: month, day: day)
     }
     
-    public init(from date: Date) {
-        let calendar = Calendar.current
+    public init(from date: Date, timeZone: TimeZone = TimeZone.current) {
+        var calendar = Calendar.current
+        calendar.timeZone = timeZone
         self.init(year: calendar.component(.year, from: date), month: Month(rawValue: calendar.component(.month, from: date)) ?? .apr, day: calendar.component(.day, from: date))
     }
     
