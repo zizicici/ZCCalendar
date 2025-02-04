@@ -20,6 +20,17 @@ public enum WeekdayOrder: Int, CaseIterable, Codable {
         return Self.init(rawValue: Calendar.current.firstWeekday - 1) ?? .sun
     }
     
+    public func getSymbol() -> String {
+        guard let weekdaySymbols = weekSymbolFormatter.weekdaySymbols else {
+            return ""
+        }
+        if rawValue % 7 < weekdaySymbols.count {
+            return weekdaySymbols[rawValue % 7]
+        } else {
+            return ""
+        }
+    }
+    
     public func getShortSymbol() -> String {
         guard let shortWeekdaySymbols = weekSymbolFormatter.shortWeekdaySymbols else {
             return ""
