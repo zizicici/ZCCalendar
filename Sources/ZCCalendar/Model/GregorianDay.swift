@@ -7,11 +7,39 @@
 
 import Foundation
 
+private struct YMDKey: Hashable {
+    let year: Int
+    let month: Month
+    let day: Int
+}
+
+private final class GregorianDayCache {
+    static let shared = GregorianDayCache()
+    private var ymdCache = [YMDKey: GregorianDay]()
+    private var jdnCache = [Int: GregorianDay]()
+    private let queue = DispatchQueue(label: "com.gregorianday.cache", attributes: .concurrent)
+    
+    func getFromYMD(key: YMDKey) -> GregorianDay? {
+        return queue.sync { ymdCache[key] }
+    }
+    
+    func getFromJDN(JDN: Int) -> GregorianDay? {
+        return queue.sync { jdnCache[JDN] }
+    }
+    
+    func cache(day: GregorianDay) {
+        let key = YMDKey(year: day.year, month: day.month, day: day.day)
+        queue.async(flags: .barrier) {
+            self.ymdCache[key] = day
+            self.jdnCache[day.julianDay] = day
+        }
+    }
+}
+
 public struct GregorianDay: Equatable, Codable, Hashable {
     public let year: Int
     public let month: Month
     public let day: Int
-
     public var julianDay: Int
 
     enum CodingKeys: String, CodingKey {
@@ -39,12 +67,27 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         var container = encoder.singleValueContainer()
         try container.encode(String(format: "%d-%02d-%02d", year, month.rawValue, day))
     }
-
-    public init(year: Int, month: Month, day: Int) {
+    
+    private init(year: Int, month: Month, day: Int, julianDay: Int) {
         self.year = year
         self.month = month
         self.day = day
-        julianDay = GregorianDay.standardJDN(year: year, month: month, day: day)
+        self.julianDay = julianDay
+    }
+
+    public init(year: Int, month: Month, day: Int) {
+        let key = YMDKey(year: year, month: month, day: day)
+        
+        if let cached = GregorianDayCache.shared.getFromYMD(key: key) {
+            self = cached
+            return
+        }
+        
+        let jdn = Self.standardJDN(year: year, month: month, day: day)
+        let newValue = Self.init(year: year, month: month, day: day, julianDay: jdn)
+        
+        GregorianDayCache.shared.cache(day: newValue)
+        self = newValue
     }
     
     public init(from date: Date, timeZone: TimeZone = TimeZone.current) {
@@ -58,6 +101,11 @@ public struct GregorianDay: Equatable, Codable, Hashable {
     }
 
     public init(JDN: Int) {
+        if let cached = GregorianDayCache.shared.getFromJDN(JDN: JDN) {
+            self = cached
+            return
+        }
+        
         let jd = Double(JDN)
         let z = Int(jd + 0.5)
         let f = jd + 0.5 - Double(z)
@@ -77,10 +125,10 @@ public struct GregorianDay: Equatable, Codable, Hashable {
         let month = e < 14 ? e - 1 : e - 13
         let year = month > 2 ? c - 4716 : c - 4715
         
-        self.year = year
-        self.month = Month(rawValue: month) ?? .jan
-        self.day = day
-        julianDay = JDN
+        let newValue = Self.init(year: year, month: Month(rawValue: month) ?? .jan, day: day, julianDay: JDN)
+        GregorianDayCache.shared.cache(day: newValue)
+
+        self = newValue
     }
 
     public func dayString() -> String {
