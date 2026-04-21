@@ -29,9 +29,16 @@ private final class GregorianDayCache {
     
     func cache(day: GregorianDay) {
         let key = YMDKey(year: day.year, month: day.month, day: day.day)
+        // Only cache by JDN when the YMD is a real calendar date. An invalid
+        // combination like "Feb 31" would share a JDN with a real date (e.g.
+        // Mar 3 in a 28-day Feb) and overwrite it in jdnCache, causing later
+        // GregorianDay(JDN:) lookups to return the bogus {Feb, 31} struct.
+        let isValid = day.day >= 1 && day.day <= Manager.dayCount(at: day.month, year: day.year)
         queue.async(flags: .barrier) {
             self.ymdCache[key] = day
-            self.jdnCache[day.julianDay] = day
+            if isValid {
+                self.jdnCache[day.julianDay] = day
+            }
         }
     }
 }

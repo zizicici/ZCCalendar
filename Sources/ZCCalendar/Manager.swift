@@ -45,7 +45,7 @@ public class Manager {
         return result
     }
     
-    func dayCount(at month: Month, isLeapYear: Bool) -> Int {
+    static func dayCount(at month: Month, isLeapYear: Bool) -> Int {
         switch month {
         case .jan, .mar, .may, .jul, .aug, .oct, .dec:
             return 31
@@ -55,8 +55,12 @@ public class Manager {
             return isLeapYear ? 29 : 28
         }
     }
-    
-    public func dayCount(at month: Month, year: Int) -> Int {
+
+    func dayCount(at month: Month, isLeapYear: Bool) -> Int {
+        return Manager.dayCount(at: month, isLeapYear: isLeapYear)
+    }
+
+    public static func dayCount(at month: Month, year: Int) -> Int {
         if year == 1582 && month == .oct {
             // 1582 fix
             return 21
@@ -64,20 +68,24 @@ public class Manager {
             return dayCount(at: month, isLeapYear: isLeap(year))
         }
     }
-    
+
+    public func dayCount(at month: Month, year: Int) -> Int {
+        return Manager.dayCount(at: month, year: year)
+    }
+
     func dayCount(year: Int) -> Int {
-        if isLeap(year) {
+        if Manager.isLeap(year) {
             return 366
         } else {
             if year == 1582 {
                 return 355
             } else {
-                return 365                
+                return 365
             }
         }
     }
-    
-    func isLeap(_ year: Int) -> Bool {
+
+    static func isLeap(_ year: Int) -> Bool {
         if year <= 4 {
             // Leap year error
             return fixLeap(year)
@@ -98,14 +106,22 @@ public class Manager {
             }
         }
     }
-    
-    func fixLeap(_ year: Int) -> Bool {
+
+    func isLeap(_ year: Int) -> Bool {
+        return Manager.isLeap(year)
+    }
+
+    static func fixLeap(_ year: Int) -> Bool {
         // Using Scaliger's theory
         if (year <= -8 && year >= -41) {
             return year % 3 == 2
         } else {
             return false
         }
+    }
+
+    func fixLeap(_ year: Int) -> Bool {
+        return Manager.fixLeap(year)
     }
     
     public func firstDay(at month: Month, year: Int) -> GregorianDay {
